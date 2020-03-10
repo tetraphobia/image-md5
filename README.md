@@ -6,6 +6,6 @@ the script will run wpgtk on the images to generate colorschemes from them.
 
 ### Basic Usage
 ```bash
-pip install -r requirements.txt
-./convert.py -w -o output/directory/foo/bar/ image1.png image.jpg image3.png
+$ pip install -r requirements.txt
+$ ./convert.py -w -o output/directory/foo/bar/ image1.png image.jpg image3.png
 ```
