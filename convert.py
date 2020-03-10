@@ -34,9 +34,6 @@ class ImageMD5:
         for file in self.images:
             yield file
 
-    async def test(self):
-        print(self.outpath)
-
     async def conversion(self):
         async for filename in self.get_files():
             md5hash = md5(Image.open(filename).tobytes())
