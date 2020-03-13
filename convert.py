@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
 """
-Asynchronously generates an MD5 hash for every image in the in/ directory,
+Generates an MD5 hash for every image in the in/ directory,
 then moves them to a specified directory before running wpg -a on them.
 """
 
-import asyncio
 import argparse
 
 from subprocess import run
@@ -30,12 +29,12 @@ class ImageMD5:
         self.images = images
         self.wpg = wpg
 
-    async def get_files(self):
+    def get_files(self):
         for file in self.images:
             yield file
 
-    async def conversion(self):
-        async for filename in self.get_files():
+    def conversion(self):
+        for filename in self.get_files():
             md5hash = md5(Image.open(filename).tobytes())
             filetype = guess(filename)
             new_file = f'{self.outpath}{md5hash.hexdigest()}.{filetype.extension}'
@@ -64,4 +63,4 @@ if __name__ == '__main__':
     parser.add_argument('FILES', nargs='+', help='Files to be converted.')
 
     args = vars(parser.parse_args())
-    asyncio.run(ImageMD5(args['wpg'], args['out'], args['FILES']).conversion())
+    ImageMD5(args['wpg'], args['out'], args['FILES']).conversion()
