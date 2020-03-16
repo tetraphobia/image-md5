@@ -42,7 +42,7 @@ class ImageMD5:
 
             if self.wpg:
                 try:
-                    run(['wpgg', '-a', new_file])
+                    run(['wpg', '-a', new_file])
                 except FileNotFoundError:
                     print('wpg not found in $PATH, ignoring...')
                     continue
