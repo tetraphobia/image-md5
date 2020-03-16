@@ -14,18 +14,12 @@ from os import rename
 from filetype import guess
 
 
-class MissingExecutableException(Exception):
-    """
-    Raised if wpg executable is not found in the user's PATH.
-    """
-    pass
-
-
 class ImageMD5:
     def __init__(self, wpg, outpath, images):
-        self.outpath = outpath
-        if self.outpath[-1] != '/':
+        if outpath[-1] != '/':
             self.outpath = outpath + '/'
+        else:
+            self.outpath = outpath
         self.images = images
         self.wpg = wpg
 
@@ -48,15 +42,16 @@ class ImageMD5:
 
             if self.wpg:
                 try:
-                    run(['wpg', '-a', new_file])
-                except Exception:
-                    raise MissingExecutableException
+                    run(['wpgg', '-a', new_file])
+                except FileNotFoundError:
+                    print('wpg not found in $PATH, ignoring...')
+                    continue
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate md5 hashes from images, rename them, '
                                                  'move them, and optionally run wpg on them.')
-    parser.add_argument('-o', '--out', default='/home/valkyrie/.papes/',
+    parser.add_argument('-o', '--out', default='./',
                         type=str, help='Directory where converted images are outputted.')
     parser.add_argument('-w', '--wpg',
                         action='store_true', help='Run wpg on the converted images.')
